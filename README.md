@@ -60,13 +60,16 @@ frontend/
    lk-agents start --entry backend.app.services.voice_agent:run_agent
    ```
 
-   如果系统提示找不到 `lk-agents` 命令，也可以直接调用模块入口：
+   如果系统提示找不到 `lk-agents` 命令，可以：
 
-   ```bash
-   python -m livekit.agents.cli start --entry backend.app.services.voice_agent:run_agent
-   ```
+   - 将 Python 安装目录下的 `Scripts/`（Windows）或 `bin/`（Unix）目录加入 `PATH` 后再次运行命令。
+   - 或直接执行仓库提供的 `agent_runner.py` 启动器（底层仍调用 `livekit.agents.cli.run_app`）：
 
-   📌 **排障小贴士**：若希望通过 `lk-agents` 命令方式运行，请确认已将 Python 安装目录下的 `Scripts/`（Windows）或 `bin/`（Unix）目录加入 `PATH`。
+     ```bash
+     python agent_runner.py start
+     ```
+
+     也可以使用 `python agent_runner.py dev --watch/--no-watch` 进入开发模式。
 
 ## 运行方式
 

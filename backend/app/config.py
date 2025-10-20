@@ -8,8 +8,9 @@ agent background workers.
 from __future__ import annotations
 
 from functools import lru_cache
+from typing import Any
 
-from pydantic import AliasChoices, Field
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -21,6 +22,7 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
         case_sensitive=False,
+        protected_namespaces=(),
     )
 
     # Alibaba Bailian credentials for speech services
@@ -62,6 +64,15 @@ class Settings(BaseSettings):
         description="URL of the LiveKit server that brokers WebRTC connections",
         validation_alias=AliasChoices("LIVEKIT_HOST", "LIVEKIT_URL"),
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _coerce_livekit_host(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            host = data.get("LIVEKIT_HOST") or data.get("LIVEKIT_URL")
+            if host is not None:
+                data.setdefault("LIVEKIT_HOST", host)
+        return data
 
     # Miscellaneous
     allow_origins: str = Field(
