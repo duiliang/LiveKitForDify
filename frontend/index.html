@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>LiveKit + Dify 语音助手</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/livekit-client@1.17.0/dist/livekit-client.min.js"></script>
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <h1>LiveKit 驱动的 Dify 语音助手</h1>
+        <p>
+          该示例演示如何通过 FastAPI、LiveKit 与阿里云 DashScope（含 CosyVoice）语音服务构建一个可打断、具备环境噪声检测和思考提示的语音助手。
+        </p>
+      </header>
+
+      <section class="controls">
+        <div class="control-group">
+          <label>房间 ID</label>
+          <input id="room" type="text" value="demo-room" />
+        </div>
+        <div class="control-group">
+          <label>用户标识</label>
+          <input id="identity" type="text" value="user-" />
+        </div>
+        <button id="connect-btn">连接助手</button>
+        <button id="disconnect-btn" disabled>结束会话</button>
+      </section>
+
+      <section class="status">
+        <h2>状态面板</h2>
+        <ul>
+          <li><strong>连接状态：</strong> <span id="connection-state">未连接</span></li>
+          <li><strong>助手状态：</strong> <span id="assistant-state">空闲</span></li>
+          <li><strong>环境噪声：</strong> <span id="ambient-level">--</span></li>
+        </ul>
+      </section>
+
+      <section class="conversation">
+        <h2>对话记录</h2>
+        <div id="conversation-log"></div>
+      </section>
+
+      <section class="manual-chat">
+        <h2>文本模式（调试备用）</h2>
+        <textarea id="manual-input" placeholder="输入文本并按发送"></textarea>
+        <button id="manual-send">发送文本</button>
+      </section>
+
+      <audio id="assistant-audio" autoplay></audio>
+    </main>
+
+    <template id="message-template">
+      <div class="message">
+        <div class="meta"></div>
+        <div class="content"></div>
+      </div>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

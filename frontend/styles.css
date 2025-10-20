@@ -1,0 +1,127 @@
+:root {
+  color-scheme: dark light;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+main.app {
+  width: min(960px, 92vw);
+  background: rgba(15, 23, 42, 0.75);
+  border-radius: 18px;
+  padding: 24px 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+}
+
+header h1 {
+  margin-bottom: 8px;
+}
+
+header p {
+  margin-top: 0;
+  line-height: 1.6;
+  color: #cbd5f5;
+}
+
+section {
+  margin-top: 32px;
+}
+
+.controls {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  align-items: end;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-group input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+}
+
+button {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: none;
+  background: #38bdf8;
+  color: #0f172a;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.status ul {
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  gap: 6px;
+}
+
+#conversation-log {
+  background: rgba(15, 23, 42, 0.35);
+  border-radius: 14px;
+  padding: 20px;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.message {
+  display: grid;
+  gap: 4px;
+}
+
+.message .meta {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.message .content {
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.manual-chat textarea {
+  width: 100%;
+  min-height: 120px;
+  border-radius: 12px;
+  padding: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+}
+
+@media (max-width: 640px) {
+  main.app {
+    padding: 20px;
+  }
+}
