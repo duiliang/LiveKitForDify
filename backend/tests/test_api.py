@@ -1,6 +1,7 @@
 import base64
 
 import pytest
+import pytest_asyncio
 import respx
 from httpx import ASGITransport, AsyncClient, Response
 
@@ -23,15 +24,20 @@ class TestSettings(Settings):
 @pytest.fixture(autouse=True)
 def override_settings(monkeypatch):
     from backend.app import main as main_module
+    from backend.app import config as config_module
 
+    original_get_settings = config_module.get_settings
+    original_get_settings.cache_clear()
     settings = TestSettings()
+    monkeypatch.setattr(config_module, "get_settings", lambda: settings)
     monkeypatch.setattr(main_module, "get_settings", lambda: settings)
-    app.dependency_overrides[main_module.get_settings] = lambda: settings
+    app.dependency_overrides[original_get_settings] = lambda: settings
     yield
     app.dependency_overrides.clear()
+    original_get_settings.cache_clear()
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def client():
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://testserver") as client:
