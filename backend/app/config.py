@@ -62,6 +62,7 @@ class Settings(BaseSettings):
     livekit_host: str = Field(
         "https://livekit.example.com",
         description="URL of the LiveKit server that brokers WebRTC connections",
+        validation_alias=AliasChoices("LIVEKIT_HOST", "LIVEKIT_URL"),
     )
 
     @model_validator(mode="before")
